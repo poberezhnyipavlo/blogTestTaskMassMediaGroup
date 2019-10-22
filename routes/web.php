@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::resource('categories', 'CategoryController')->names('categories');
+Route::resource('posts', 'PostController')->names('posts');

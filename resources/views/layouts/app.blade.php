@@ -11,7 +11,7 @@
             <a class="nav-link" href="{{ route('categories.index') }}">Категорії</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Пости</a>
+            <a class="nav-link" href="{{ route('posts.index') }}">Пости</a>
         </li>
     </ul>
     @yield('content')
