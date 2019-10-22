@@ -17,3 +17,5 @@ Route::get('/', function () {
 
 Route::resource('categories', 'CategoryController')->names('categories');
 Route::resource('posts', 'PostController')->names('posts');
+Route::post('/comment', 'CommentController@store')->name('comment');
+
