@@ -13,6 +13,7 @@
             </div>
         </div>
     @endif
+    <h1>Редагування категорії</h1>
     <form action="{{ route('categories.update', $category) }}" method="post" class="form-horizonal">
         @csrf
         @method('put')

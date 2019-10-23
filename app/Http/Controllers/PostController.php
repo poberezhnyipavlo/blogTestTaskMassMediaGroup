@@ -99,8 +99,10 @@ class PostController extends Controller
                 'category_id' => $request['category_id'],
                 'file' => $path,
             ]);
+        } else{
+            $post->update($request->all());
         }
-        $post->update($request->all());
+
         if (!empty($result)) {
             return redirect()->route('posts.index')->with(['success' => 'Дані успішно змінено.']);
         } else {

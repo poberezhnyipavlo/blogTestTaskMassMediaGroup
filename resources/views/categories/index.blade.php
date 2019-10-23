@@ -15,6 +15,7 @@
             </div>
         </div>
     @endif
+    <h1>Список всіх категорій</h1>
     <a href="{{ route('categories.create') }}" class="btn btn-success">Нова</a>
 <table class="table">
     <thead>

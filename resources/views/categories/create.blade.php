@@ -13,6 +13,7 @@
             </div>
         </div>
     @endif
+    <h1>Створення категорії</h1>
     <form action="{{ route('categories.store') }}" method="post" class="form-horizonal">
         @csrf
         @include('categories.form.form')
