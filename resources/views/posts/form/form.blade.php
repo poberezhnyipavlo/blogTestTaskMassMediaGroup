@@ -9,8 +9,11 @@
     @foreach($categories as $category)
         <?php /** @var \App\Category $category */ ?>
         <option value="{{ $category->id }}"
-            @if($category->id == $post->category_id) selected @endif>{{ $category->name }}</option>
+                @if($category->id == $post->category_id) selected @endif>{{ $category->name }}</option>
     @endforeach
 </select>
+
+<label for="">Виберіть файл</label>
+<input type="file" class="form-control-file" name="file">
 
 <input class="btn btn-primary" type="submit" value="Зберегти">

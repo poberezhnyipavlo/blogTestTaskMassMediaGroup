@@ -7,6 +7,9 @@
         <div class="card-body">
             <h5 class="card-title">{{ $post->name ?? '' }}</h5>
             <p class="card-text">{!! $post->content ?? '' !!}</p>
+            @if(!empty($post->file))
+                <a href="{{ route('download', ['path' => $post->file]) }}">Прикріплений файл</a>
+            @endif
             <a href="{{ route('posts.edit', $post) }}" class="btn btn-warning">Редагувати</a>
         </div>
     </div>

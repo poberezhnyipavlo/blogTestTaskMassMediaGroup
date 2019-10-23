@@ -13,11 +13,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property \App\Comment $comments
  * @property string $name
  * @property string $content
+ * @property string $file
  */
 
 class Post extends Model
 {
-    protected $fillable = ['name', 'content', 'category_id'];
+    protected $fillable = ['name', 'content', 'file', 'category_id'];
 
     public function category()
     {

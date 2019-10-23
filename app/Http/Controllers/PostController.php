@@ -39,7 +39,15 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        Post::create($request->all());
+        if ($request->hasFile('file')){
+            $path = $request->file('file')->store('uploads', 'public');
+        }
+        Post::create([
+            'name' => $request['name'],
+            'content' => $request['content'],
+            'category_id' => $request['category_id'],
+            'file' => $path,
+        ]);
         return redirect()->route('posts.index');
     }
 
@@ -76,7 +84,15 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $post->update($request->all());
+        if ($request->hasFile('file')){
+            $path = $request->file('file')->store('uploads', 'public');
+        }
+        $post->update([
+            'name' => $request['name'],
+            'content' => $request['content'],
+            'category_id' => $request['category_id'],
+            'file' => $request->hasFile('file') ? $path : '',
+        ]);
         return redirect()->route('posts.index');
     }
 
