@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Jenssegers\Agent\Agent;
 
 class CategoryController extends Controller
 {
@@ -14,6 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
+
+//        dd($browser);
         $categories = Category::all();
         return view('categories.index', compact('categories'));
     }
