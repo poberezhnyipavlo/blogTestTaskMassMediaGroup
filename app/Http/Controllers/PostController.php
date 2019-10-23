@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Requests\PostRequest;
 use App\Post;
 use Illuminate\Http\Request;
 
@@ -37,18 +38,24 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         if ($request->hasFile('file')){
             $path = $request->file('file')->store('uploads', 'public');
         }
-        Post::create([
+        $item = Post::create([
             'name' => $request['name'],
             'content' => $request['content'],
             'category_id' => $request['category_id'],
             'file' => $path,
         ]);
-        return redirect()->route('posts.index');
+        if ($item) {
+            return redirect()->route('posts.index')->with(['success' => 'Дані успішно збережено.']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Помилка при збереженні.'])
+                ->withInput();
+        }
     }
 
     /**
@@ -82,18 +89,25 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(PostRequest $request, Post $post)
     {
         if ($request->hasFile('file')){
             $path = $request->file('file')->store('uploads', 'public');
+            $result = $post->update([
+                'name' => $request['name'],
+                'content' => $request['content'],
+                'category_id' => $request['category_id'],
+                'file' => $path,
+            ]);
         }
-        $post->update([
-            'name' => $request['name'],
-            'content' => $request['content'],
-            'category_id' => $request['category_id'],
-            'file' => $request->hasFile('file') ? $path : '',
-        ]);
-        return redirect()->route('posts.index');
+        $post->update($request->all());
+        if (!empty($result)) {
+            return redirect()->route('posts.index')->with(['success' => 'Дані успішно змінено.']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Помилка при зміненні даних.'])
+                ->withInput();
+        }
     }
 
     /**

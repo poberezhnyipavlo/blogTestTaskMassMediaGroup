@@ -1,8 +1,8 @@
 <label for="">Назва</label>
-<input type="text" class="form-control" name="name" value="{{ $post->name ?? '' }}">
+<input type="text" class="form-control" name="name" value="{{ $post->name ?? old('name') ?? '' }}">
 <label for="">Контент</label>
 <textarea class="form-control" name="content">
-    {{ $post->content ?? '' }}
+    {{ $post->content ?? old('content') ?? '' }}
 </textarea>
 <label>Виберіть категорію</label>
 <select name="category_id" class="form-control">

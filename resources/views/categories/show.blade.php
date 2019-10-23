@@ -28,6 +28,7 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
+                    <div class="alert alert-danger" style="display:none" id="errors"></div>
                     <button data-toggle="modal" data-target="#modal-default" type="button" class="btn btn-primary">Новий
                         коментар
                     </button>
@@ -36,7 +37,8 @@
                         @foreach($category->comments as $comment)
                             <?php /** @var \App\Comment $comment */ ?>
                             <li>
-                                <h7>{{ $comment->author ?? ''}}</h7><br>
+                                <h7>{{ $comment->author ?? ''}}</h7>
+                                <br>
                                 <h8>{{ $comment->content ?? ''}}</h8>
                             </li>
                         @endforeach
@@ -48,6 +50,13 @@
     <div class="modal fade" id="modal-default">
         <div class="modal-dialog">
             <div class="modal-content">
+                <div class="messages">
+                    <div class="alert alert-danger">
+                        <ul id="errors">
+
+                        </ul>
+                    </div>
+                </div>
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
@@ -84,19 +93,25 @@
                 url: '/comment',
                 data: $(this).serialize(),
                 success(response) {
-                    console.log(response);
                     $('#modal-default').modal('hide');
                     $('#comments').append(`
-                            <li>
-                                <h5>${response.author}</h5>
-                                <h6>${response.content}</h6>
-                            </li>
-                        `);
+                                <li>
+                                    <h5>${response.author}</h5>
+                                    <h6>${response.content}</h6>
+                                </li>
+                            `);
                     $("form#comment input[name=author]").val('');
                     $("form#comment input[name=content]").val('')
+
                 },
-                error(error) {
-                    console.log(error)
+                error: function (response) {
+                    var errors = response.responseJSON.errors;
+                    console.log(errors);
+                    $.each( errors, function( key, value ) {
+                        $('#comments').append(`
+                            <li> value[0] + value[1]</li>;
+                        `);
+                    });
                 }
             })
         });
